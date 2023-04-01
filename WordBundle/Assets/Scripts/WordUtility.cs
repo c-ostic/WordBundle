@@ -56,14 +56,16 @@ public class WordUtility
         try
         {
             TextAsset letterWeightsFile = Resources.Load(LETTER_WEIGHTS_FILE) as TextAsset;
-            StringReader reader = new StringReader(letterWeightsFile.text);
 
-            // There should be 26 numeric lines in the file, otherwise there's an error
-            for (int i = 0; i < NUM_LETTERS; i++)
+            using (StringReader reader = new StringReader(letterWeightsFile.text))
             {
-                double weight = double.Parse(reader.ReadLine());
-                sum += weight;
-                letterWeights[i] = weight;
+                // There should be 26 numeric lines in the file, otherwise there's an error
+                for (int i = 0; i < NUM_LETTERS; i++)
+                {
+                    double weight = double.Parse(reader.ReadLine());
+                    sum += weight;
+                    letterWeights[i] = weight;
+                }
             }
 
             Debug.Log(LOG_TAG + ": Successfully read letter weights");
