@@ -210,16 +210,56 @@ public class GameState
         }
 
         // Regardless of the result, the word should be cleared
-        currWord.Clear();
+        ClearWord();
 
         return result;
+    }
+
+    /**
+     * Clears the current word
+     */
+    public void ClearWord()
+    {
+        currWord.Clear();
+    }
+
+    /**
+     * Removes the last letter from the current word
+     * @return a tuple with the position of the letter removed (or -1 if none were removed)
+     */
+    public int Backspace()
+    {
+        if (currWord.Count == 0)
+            return -1;
+
+        int removed = currWord[currWord.Count - 1];
+        currWord.RemoveAt(currWord.Count - 1);
+        return removed;
+    }
+
+    /**
+     * Clears the current word and shuffles the letters randomly
+     */
+    public void ShuffleLetters()
+    {
+        ClearWord();
+
+        // Fisher-Yates shuffle algorithm
+        for (int i = 0;i < letters.Length - 2;i++)
+        {
+            int swap = Random.Range(i, letters.Length - 1);
+
+            char temp = letters[i];
+            letters[i] = letters[swap];
+            letters[swap] = temp;
+        }
     }
 
     /**
      * Returns the string version of the current word
      * @return the current word
      */
-    private string GetCurrentWord()
+    public string GetCurrentWord()
     {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -283,7 +323,7 @@ public class GameState
 
             return true;
         }
-        catch (IOException e)
+        catch (IOException)
         {
             Debug.LogWarning(LOG_TAG + ": Unable to save game to file");
             return false;
@@ -368,7 +408,7 @@ public class GameState
 
             return true;
         }
-        catch (IOException e)
+        catch (IOException)
         {
             Debug.LogWarning(LOG_TAG + ": Unable to load game file");
             return false;

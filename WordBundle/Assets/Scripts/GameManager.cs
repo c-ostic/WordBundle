@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
     /**
      * Updates each letter button to sync them with the current gameState
+     * Also clears the current word since all buttons are set to a false state
      */
     private void RefreshLetterButtons()
     {
@@ -123,6 +124,8 @@ public class GameManager : MonoBehaviour
                 currentButton.GetComponentInChildren<TextMeshProUGUI>().text = letter.ToString();
             }
         }
+
+        wordEntryText.text = "";
     }
 
     /**
@@ -194,7 +197,8 @@ public class GameManager : MonoBehaviour
      */
     public void ShuffleLetters()
     {
-        // TODO: add functionality for this in game state
+        gameState.ShuffleLetters();
+        RefreshLetterButtons();
     }
 
     /**
@@ -202,7 +206,15 @@ public class GameManager : MonoBehaviour
      */
     public void Backspace()
     {
-        // TODO: add functionality for this in game state
+        int removedLetter = gameState.Backspace();
+
+        // If a letter was removed, update the corresponding button
+        if (removedLetter >= 0)
+        {
+            letterButtons[removedLetter].SetToggleState(false);
+
+            wordEntryText.text = gameState.GetCurrentWord();
+        }
     }
 
     /**
@@ -210,7 +222,8 @@ public class GameManager : MonoBehaviour
      */
     public void ClearWord()
     {
-        // TODO: add functionality for this in game state
+        gameState.ClearWord();
+        RefreshLetterButtons();
     }
 
     /**
