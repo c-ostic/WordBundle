@@ -50,7 +50,7 @@ public class GameState
         letters = new char[LETTER_POOL_SIZE];
 
         // Set the defaults if a new game is requested or if there's an error with the file
-        if (newGame || !loadGame())
+        if (newGame || !LoadGame())
         {
             // Fill the letters array with some starting letters
             for (int i = 0; i < NUM_STARTING_LETTERS; i++)
@@ -71,7 +71,7 @@ public class GameState
      * @param letterNum the index of the letter to get
      * @return the letter at that index
      */
-    public char getLetter(int letterNum)
+    public char GetLetter(int letterNum)
     {
         return letters[letterNum];
     }
@@ -80,7 +80,7 @@ public class GameState
      * Accessor for the score
      * @return the score
      */
-    public int getScore()
+    public int GetScore()
     {
         return score;
     }
@@ -89,7 +89,7 @@ public class GameState
      * Checks if the game is over
      * @return true if the game is over, false if the game is still running
      */
-    public bool isGameOver()
+    public bool IsGameOver()
     {
         return gameOverFlag;
     }
@@ -100,7 +100,7 @@ public class GameState
      * @param letterNum the index of letter to add
      * @return the current word after pressing the letter
      */
-    public string pressLetter(int letterNum)
+    public string PressLetter(int letterNum)
     {
         // If the letter isn't null add it to the current word
         if (letters[letterNum] != NULL_CHARACTER)
@@ -113,7 +113,7 @@ public class GameState
             Debug.LogWarning(LOG_TAG + ": Tried to add a letter with no current value to the word");
         }
 
-        return getCurrentWord();
+        return GetCurrentWord();
     }
 
     /**
@@ -122,7 +122,7 @@ public class GameState
      * @param letterNum the index of the letter to remove
      * @return the current word after unpressing the letter
      */
-    public string unPressLetter(int letterNum)
+    public string UnPressLetter(int letterNum)
     {
         // Remove the letter index from the current word
         bool wasRemoved = currWord.Remove(letterNum);
@@ -133,7 +133,7 @@ public class GameState
             Debug.LogWarning(LOG_TAG + ": Tried to remove letter that wasn't a part of the word");
         }
 
-        return getCurrentWord();
+        return GetCurrentWord();
     }
 
     /**
@@ -142,7 +142,7 @@ public class GameState
      * If there are no open spaces, set the game over flag
      * @return the index of the new letter, or -1 if there was no space
      */
-    public int addNewLetter()
+    public int AddNewLetter()
     {
         int newLetterPosition = -1;
 
@@ -163,7 +163,7 @@ public class GameState
         {
             gameOverFlag = true;
             //highScoreManager.addScore(score);
-            clearSave();
+            ClearSave();
         }
 
         return newLetterPosition;
@@ -176,9 +176,9 @@ public class GameState
      * Otherwise, send back the appropriate error
      * @return the result of the submission
      */
-    public WordSubmitResult submitWord()
+    public WordSubmitResult SubmitWord()
     {
-        string word = getCurrentWord();
+        string word = GetCurrentWord();
         WordSubmitResult result;
 
         // Check if the word was guessed previously
@@ -219,7 +219,7 @@ public class GameState
      * Returns the string version of the current word
      * @return the current word
      */
-    private string getCurrentWord()
+    private string GetCurrentWord()
     {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -235,7 +235,7 @@ public class GameState
      * Saves the current game state to a file
      * @return true if the save succeeded, false otherwise
      */
-    public bool saveGame()
+    public bool SaveGame()
     {
         // Don't save a game over
         if (gameOverFlag)
@@ -244,7 +244,7 @@ public class GameState
         }
 
         // Clear any previous save before saving the new game
-        clearSave();
+        ClearSave();
 
         StringBuilder builder = new StringBuilder();
 
@@ -294,7 +294,7 @@ public class GameState
      * Clears the save file
      * @return true if it succeeded, false otherwise
      */
-    private bool clearSave()
+    private bool ClearSave()
     {
         if (File.Exists(save_file))
         {
@@ -322,7 +322,7 @@ public class GameState
      * If the file exists but there is missing information, fill in with defaults
      * @return true if it succeeded, false otherwise
      */
-    private bool loadGame()
+    private bool LoadGame()
     {
         // If there is no save file, don't try to load
         if (!PlayerPrefs.HasKey(SAVE_FILE_EXISTS_KEY) || PlayerPrefs.GetInt(SAVE_FILE_EXISTS_KEY) == 0)

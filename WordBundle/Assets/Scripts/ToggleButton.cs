@@ -17,6 +17,9 @@ public class ToggleButton : MonoBehaviour
     public delegate void ToggleDelegate(bool toggled);
     public event ToggleDelegate Toggled;
 
+    /**
+     * Called at the beginning of the scene starting up
+     */
     private void Awake()
     {
         toggled = false;
@@ -33,7 +36,11 @@ public class ToggleButton : MonoBehaviour
         }
     }
 
-    public void Toggle()
+    /**
+     * The listener for button clicks to toggle the button
+     * Invokes the Toggled event with the current toggle state
+     */
+    private void Toggle()
     {
         toggled = !toggled;
 
@@ -49,6 +56,27 @@ public class ToggleButton : MonoBehaviour
         Toggled?.Invoke(toggled);
     }
 
+    /**
+     * Set the toggle state directly
+     * Does not invoke the Toggled event
+     */
+    public void SetToggleState(bool newState)
+    {
+        toggled = newState;
+
+        if (toggled)
+        {
+            buttonSprite.color = onColor;
+        }
+        else
+        {
+            buttonSprite.color = offColor;
+        }
+    }
+
+    /**
+     * Returns the state of the button
+     */
     public bool IsToggled()
     {
         return toggled;
