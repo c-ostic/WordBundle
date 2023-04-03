@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    private const string LOG_TAG = nameof(MainMenuController);
+
     [SerializeField]
     private Button resumeButton;
 
@@ -49,6 +51,7 @@ public class MainMenuController : MonoBehaviour
 
     public void Quit()
     {
+        Debug.Log(LOG_TAG + ": Quitting Application");
         Application.Quit();
     }
 }

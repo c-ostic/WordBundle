@@ -29,8 +29,16 @@ public class SceneLoader : MonoBehaviour
         // If escape is pressed (back button for android), move back one scene in the history
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            sceneHistory.Pop();
-            SceneManager.LoadScene(sceneHistory.Peek());
+            if (sceneHistory.Count == 1)
+            {
+                Debug.Log(LOG_TAG + ": Quitting Application");
+                Application.Quit();
+            }
+            else
+            {
+                sceneHistory.Pop();
+                SceneManager.LoadScene(sceneHistory.Peek());
+            }
         }
     }
 

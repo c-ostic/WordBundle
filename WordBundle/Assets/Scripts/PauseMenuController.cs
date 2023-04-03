@@ -53,11 +53,13 @@ public class PauseMenuController : MonoBehaviour
         }
 
         scoreText.text = sceneLoader.GetArgument(SceneConstants.SCORE_INFO, 0).ToString();
+
+        // Makes sure the game is resumed whether the user presses the resume button, or hits the back button on Android (Escape on keyboard)
+        sceneLoader.AddArgument(SceneConstants.NEW_GAME_INFO, SceneConstants.RESUME_GAME_REQUEST);
     }
 
     public void ResumeGame()
     {
-        sceneLoader.AddArgument(SceneConstants.NEW_GAME_INFO, SceneConstants.RESUME_GAME_REQUEST);
         sceneLoader.BacktrackToScene(SceneConstants.GAME_SCREEN_INDEX);
     }
 
