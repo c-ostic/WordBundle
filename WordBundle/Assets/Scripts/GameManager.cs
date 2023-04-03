@@ -31,13 +31,18 @@ public class GameManager : MonoBehaviour
     // The current time on the timer
     private float current_timer_value;
 
+    private SceneLoader sceneLoader;
+
     /**
      * Called at the beginning of the scene starting up
      */
     private void Awake()
     {
-        // TODO: Make this available to change
-        gameState = new GameState(true);
+        sceneLoader = FindObjectOfType<SceneLoader>();
+
+        // Start a new game if the new game info argument is 1, or if there's no argument
+        int gameRequest = sceneLoader.GetArgument(SceneConstants.NEW_GAME_INFO, SceneConstants.NEW_GAME_REQUEST);
+        gameState = new GameState(gameRequest == SceneConstants.NEW_GAME_REQUEST);
 
         current_timer_value = 0;
     }
@@ -81,6 +86,14 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    /**
+     * Called when this object is destroyed
+     */
+    private void OnDestroy()
+    {
+        gameState.SaveGame();
     }
 
     /**
@@ -133,7 +146,9 @@ public class GameManager : MonoBehaviour
      */
     private void GameOver()
     {
-        // TODO: connect to scene changer
+        sceneLoader.AddArgument(SceneConstants.REQUEST_INFO, SceneConstants.GAME_OVER_REQUEST);
+        sceneLoader.AddArgument(SceneConstants.SCORE_INFO, gameState.GetScore());
+        sceneLoader.LoadNewScene(SceneConstants.PAUSE_MENU_INDEX);
     }
 
     /**
@@ -231,6 +246,8 @@ public class GameManager : MonoBehaviour
      */
     public void PauseGame()
     {
-        // TODO: connect to scene changer
+        sceneLoader.AddArgument(SceneConstants.REQUEST_INFO, SceneConstants.PAUSE_REQUEST);
+        sceneLoader.AddArgument(SceneConstants.SCORE_INFO, gameState.GetScore());
+        sceneLoader.LoadNewScene(SceneConstants.PAUSE_MENU_INDEX);
     }
 }

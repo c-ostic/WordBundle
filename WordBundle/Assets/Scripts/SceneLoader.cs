@@ -39,19 +39,10 @@ public class SceneLoader : MonoBehaviour
      * If the sceneName isn't found, no scene is loaded
      * @param sceneName the scene to load
      */
-    public void LoadNewScene(string sceneName)
+    public void LoadNewScene(int buildIndex)
     {
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-        
-        if (scene != null)
-        {
-            sceneHistory.Push(scene.buildIndex);
-            SceneManager.LoadScene(scene.buildIndex);
-        }
-        else
-        {
-            Debug.LogWarning(LOG_TAG + ": " + sceneName + " is not a valid scene");
-        }
+        sceneHistory.Push(buildIndex);
+        SceneManager.LoadScene(buildIndex);
     }
 
     /**
@@ -59,27 +50,18 @@ public class SceneLoader : MonoBehaviour
      * If the sceneName isn't found, no scene is loaded
      * @param sceneName the scene to load
      */
-    public void BacktrackToScene(string sceneName)
+    public void BacktrackToScene(int buildIndex)
     {
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-
-        if (scene != null)
+        if (sceneHistory.Contains(buildIndex))
         {
-            if (sceneHistory.Contains(scene.buildIndex))
-            {
-                // Keep popping off scenes until you reach the desired index
-                while (sceneHistory.Peek() != scene.buildIndex) sceneHistory.Pop();
+            // Keep popping off scenes until you reach the desired index
+            while (sceneHistory.Peek() != buildIndex) sceneHistory.Pop();
 
-                SceneManager.LoadScene(scene.buildIndex);
-            }
-            else
-            {
-                Debug.LogWarning(LOG_TAG + ": " + sceneName + " is not in the scene history");
-            }
+            SceneManager.LoadScene(buildIndex);
         }
         else
         {
-            Debug.LogWarning(LOG_TAG + ": " + sceneName + " is not a valid scene");
+            Debug.LogWarning(LOG_TAG + ": " + buildIndex + " is not in the scene history");
         }
     }
 
@@ -90,7 +72,7 @@ public class SceneLoader : MonoBehaviour
      */
     public void AddArgument(string key, int value)
     {
-        if (arguments.ContainsKey("key"))
+        if (arguments.ContainsKey(key))
         {
             arguments[key] = value;
         }

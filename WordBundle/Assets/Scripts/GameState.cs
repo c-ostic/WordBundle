@@ -14,9 +14,9 @@ public enum WordSubmitResult
 public class GameState
 {
     private const string LOG_TAG = nameof(GameState);
-
     private const int LETTER_POOL_SIZE = 16;
     private const int NUM_STARTING_LETTERS = 8;
+
     public const char NULL_CHARACTER = '\0';
     public const string SAVE_FILE_EXISTS_KEY = "saveFileExists";
 
@@ -377,7 +377,6 @@ public class GameState
             {
 
                 // First line should be the score
-                int score;
                 if (!int.TryParse(reader.ReadLine(), out score))
                 {
                     score = 0;
