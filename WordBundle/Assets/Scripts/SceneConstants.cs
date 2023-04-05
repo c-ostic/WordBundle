@@ -8,6 +8,7 @@ public static class SceneConstants
     public const int MAIN_MENU_INDEX = 0;
     public const int GAME_SCREEN_INDEX = 1;
     public const int PAUSE_MENU_INDEX = 2;
+    public const int HIGHSCORE_MENU_INDEX = 3;
 
     // Request key and values for pause menu (which doubles as game over and how to play)
     public const string REQUEST_INFO = "request";

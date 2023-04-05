@@ -31,7 +31,7 @@ public class GameState
     private List<int> currWord;
 
     private WordUtility wordUtility;
-    //private HighScoreManager highScoreManager;
+    private HighscoreManager highscoreManager;
 
     /**
      * Creates a game state, loading from file or creating a new game
@@ -40,7 +40,7 @@ public class GameState
     public GameState(bool newGame)
     {
         wordUtility = new WordUtility();
-        //highScoreManager = new HighScoreManager();
+        highscoreManager = new HighscoreManager();
 
         // Set defaults for everything
         guessedWords = new HashSet<string>();
@@ -162,7 +162,7 @@ public class GameState
         if (newLetterPosition == -1)
         {
             gameOverFlag = true;
-            //highScoreManager.addScore(score);
+            highscoreManager.AddScore(score);
             ClearSave();
         }
 

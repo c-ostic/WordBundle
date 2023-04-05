@@ -46,7 +46,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ViewHighscores()
     {
-
+        sceneLoader.LoadNewScene(SceneConstants.HIGHSCORE_MENU_INDEX);
     }
 
     public void Quit()

@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PauseMenu.unity
     guid: 5fe88a541fa1b6342a827927decfd451
+  - enabled: 1
+    path: Assets/Scenes/HighscoreScreen.unity
+    guid: 405a426b48db8e54e93ae34086894cb2
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 0ec0407c13768f349a2eb3c8adf07d92, type: 2}
