@@ -1,9 +1,11 @@
 using System.Text;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The results that can be sent back by a word submission
+/// </summary>
 public enum WordSubmitResult
 {
     SUCCESS,
@@ -11,6 +13,9 @@ public enum WordSubmitResult
     NO_WORD_FOUND
 }
 
+/// <summary>
+/// Represents all of the current game's info including the game save file
+/// </summary>
 public class GameState
 {
     private const string LOG_TAG = nameof(GameState);
@@ -33,10 +38,10 @@ public class GameState
     private WordUtility wordUtility;
     private HighscoreManager highscoreManager;
 
-    /**
-     * Creates a game state, loading from file or creating a new game
-     * @param newGame whether to create a new game
-     */
+    /// <summary>
+    /// Creates a game state, loading from file or creating a new game
+    /// </summary>
+    /// <param name="newGame"> whether to create a new game </param>
     public GameState(bool newGame)
     {
         wordUtility = new WordUtility();
@@ -66,40 +71,40 @@ public class GameState
         }
     }
 
-    /**
-     * Accessor for individual letters
-     * @param letterNum the index of the letter to get
-     * @return the letter at that index
-     */
+    /// <summary>
+    /// Accessor for individual letters
+    /// </summary>
+    /// <param name="letterNum"> the index of the letter to get </param>
+    /// <returns> the letter at that index </returns>
     public char GetLetter(int letterNum)
     {
         return letters[letterNum];
     }
 
-    /**
-     * Accessor for the score
-     * @return the score
-     */
+    /// <summary>
+    /// Accessor for the score
+    /// </summary>
+    /// <returns> the score </returns>
     public int GetScore()
     {
         return score;
     }
 
-    /**
-     * Checks if the game is over
-     * @return true if the game is over, false if the game is still running
-     */
+    /// <summary>
+    /// Checks if the game is over
+    /// </summary>
+    /// <returns> true if the game is over, false if the game is still running </returns>
     public bool IsGameOver()
     {
         return gameOverFlag;
     }
 
-    /**
-     * Provides functionality for when a letter is pressed
-     * Adds a letter to the current word
-     * @param letterNum the index of letter to add
-     * @return the current word after pressing the letter
-     */
+    /// <summary>
+    /// Provides functionality for when a letter is pressed.
+    /// Adds a letter to the current word
+    /// </summary>
+    /// <param name="letterNum"> the index of letter to add </param>
+    /// <returns> the current word after pressing the letter </returns>
     public string PressLetter(int letterNum)
     {
         // If the letter isn't null add it to the current word
@@ -116,12 +121,12 @@ public class GameState
         return GetCurrentWord();
     }
 
-    /**
-     * Provides functionality for a letter is unpressed
-     * Removes a letter from the current word
-     * @param letterNum the index of the letter to remove
-     * @return the current word after unpressing the letter
-     */
+    /// <summary>
+    /// Provides functionality for a letter is unpressed.
+    /// Removes a letter from the current word.
+    /// </summary>
+    /// <param name="letterNum"> the index of the letter to remove </param>
+    /// <returns> the current word after unpressing the letter </returns>
     public string UnPressLetter(int letterNum)
     {
         // Remove the letter index from the current word
@@ -136,12 +141,11 @@ public class GameState
         return GetCurrentWord();
     }
 
-    /**
-     * Adds a new letter to the letter pool
-     * Adds to the first open space
-     * If there are no open spaces, set the game over flag
-     * @return the index of the new letter, or -1 if there was no space
-     */
+    /// <summary>
+    /// Adds a new letter to the letter pool in the first open space.
+    /// If there are no open spaces, set the game over flag.
+    /// </summary>
+    /// <returns> the index of the new letter, or -1 if there was no space </returns>
     public int AddNewLetter()
     {
         int newLetterPosition = -1;
@@ -169,13 +173,12 @@ public class GameState
         return newLetterPosition;
     }
 
-    /**
-     * Submits a word to the WordUtility to check if it exists
-     * Clears the current word
-     * If it exists, calculate and add to the score
-     * Otherwise, send back the appropriate error
-     * @return the result of the submission
-     */
+    /// <summary>
+    /// Submits a word to the WordUtility to check if it exists.
+    /// Clears the current word.
+    /// If it exists, calculate and add to the score.
+    /// </summary>
+    /// <returns> the result of the submission </returns>
     public WordSubmitResult SubmitWord()
     {
         string word = GetCurrentWord();
@@ -215,18 +218,18 @@ public class GameState
         return result;
     }
 
-    /**
-     * Clears the current word
-     */
+    /// <summary>
+    /// Clears the current word
+    /// </summary>
     public void ClearWord()
     {
         currWord.Clear();
     }
 
-    /**
-     * Removes the last letter from the current word
-     * @return a tuple with the position of the letter removed (or -1 if none were removed)
-     */
+    /// <summary>
+    /// Removes the last letter from the current word
+    /// </summary>
+    /// <returns> the position of the letter removed (or -1 if none were removed) </returns>
     public int Backspace()
     {
         if (currWord.Count == 0)
@@ -237,9 +240,9 @@ public class GameState
         return removed;
     }
 
-    /**
-     * Clears the current word and shuffles the letters randomly
-     */
+    /// <summary>
+    /// Clears the current word and shuffles the letters randomly
+    /// </summary>
     public void ShuffleLetters()
     {
         ClearWord();
@@ -255,10 +258,10 @@ public class GameState
         }
     }
 
-    /**
-     * Returns the string version of the current word
-     * @return the current word
-     */
+    /// <summary>
+    /// Returns the string version of the current word
+    /// </summary>
+    /// <returns> the current word </returns>
     public string GetCurrentWord()
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -271,10 +274,10 @@ public class GameState
         return stringBuilder.ToString();
     }
 
-    /**
-     * Saves the current game state to a file
-     * @return true if the save succeeded, false otherwise
-     */
+    /// <summary>
+    /// Saves the current game state to a file
+    /// </summary>
+    /// <returns> true if the save succeeded, false otherwise </returns>
     public bool SaveGame()
     {
         // Don't save a game over
@@ -330,10 +333,10 @@ public class GameState
         }
     }
 
-    /**
-     * Clears the save file
-     * @return true if it succeeded, false otherwise
-     */
+    /// <summary>
+    /// Clears the save file
+    /// </summary>
+    /// <returns> true if it succeeded, false otherwise </returns>
     private bool ClearSave()
     {
         if (File.Exists(save_file))
@@ -357,11 +360,11 @@ public class GameState
         }
     }
 
-    /**
-     * Loads a game state from the save file
-     * If the file exists but there is missing information, fill in with defaults
-     * @return true if it succeeded, false otherwise
-     */
+    /// <summary>
+    /// Loads a game state from the save file.
+    /// If the file exists but there is missing information, fill in with defaults.
+    /// </summary>
+    /// <returns> true if it succeeded, false otherwise </returns>
     private bool LoadGame()
     {
         // If there is no save file, don't try to load

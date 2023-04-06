@@ -1,8 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Persists throughout the entire application and manages the loading of new scenes, returning to old scenes, and passing information
+/// </summary>
 public class SceneLoader : MonoBehaviour
 {
     private const string LOG_TAG = nameof(SceneLoader);
@@ -13,6 +15,9 @@ public class SceneLoader : MonoBehaviour
     // Argument list
     private Dictionary<string, int> arguments;
 
+    /// <summary>
+    /// Called at the start of the scene, before Start() and the first frame update
+    /// </summary>
     private void Awake()
     {
         // This will persist throughout the application
@@ -24,6 +29,9 @@ public class SceneLoader : MonoBehaviour
         arguments = new Dictionary<string, int>();
     }
 
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     private void Update()
     {
         // If escape is pressed (back button for android), move back one scene in the history
@@ -42,22 +50,22 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    /**
-     * Creates a new instance of sceneName and adds it to the history
-     * If the sceneName isn't found, no scene is loaded
-     * @param sceneName the scene to load
-     */
+    /// <summary>
+    /// Creates a new instance of sceneName and adds it to the history.
+    /// If the sceneName isn't found, no scene is loaded
+    /// </summary>
+    /// <param name="buildIndex"> the scene to load </param>
     public void LoadNewScene(int buildIndex)
     {
         sceneHistory.Push(buildIndex);
         SceneManager.LoadScene(buildIndex);
     }
 
-    /**
-     * Backtracks through the history to find sceneName and loads it, removing everything in front of it in the scene history
-     * If the sceneName isn't found, no scene is loaded
-     * @param sceneName the scene to load
-     */
+    /// <summary>
+    /// Backtracks through the history to find sceneName and loads it, removing everything in front of it in the scene history.
+    /// If the sceneName isn't found, no scene is loaded
+    /// </summary>
+    /// <param name="buildIndex"> the scene to load </param>
     public void BacktrackToScene(int buildIndex)
     {
         if (sceneHistory.Contains(buildIndex))
@@ -73,11 +81,11 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    /**
-     * Adds an argument to the argument list. If the key already exists, replace it
-     * @param key the key to use
-     * @param value the value attached to the key
-     */
+    /// <summary>
+    /// Adds an argument to the argument list. If the key already exists, replace it
+    /// </summary>
+    /// <param name="key"> the key to use </param>
+    /// <param name="value"> the value attached to the key</param>
     public void AddArgument(string key, int value)
     {
         if (arguments.ContainsKey(key))
@@ -90,12 +98,12 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    /**
-     * Gets the value of a particular key from the arguments or default if it doesn't exist
-     * @param key the key to search for
-     * @param defaultValue the default to use if the key isn't found
-     * @return either the value attached to the key or defaultValue
-     */
+    /// <summary>
+    /// Gets the value of a particular key from the arguments or default if it doesn't exist
+    /// </summary>
+    /// <param name="key"> the key to search for </param>
+    /// <param name="defaultValue"> the default to use if the key isn't found </param>
+    /// <returns> either the value attached to the key or defaultValue </returns>
     public int GetArgument(string key, int defaultValue)
     {
         if (arguments.TryGetValue(key, out int value))

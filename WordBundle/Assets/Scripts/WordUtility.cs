@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Loads the wordlist and letter weights.
+/// Contains useful functions related to the words and letters.
+/// </summary>
 public class WordUtility
 {
     private const int NUM_LETTERS = 26;
@@ -24,9 +27,9 @@ public class WordUtility
     //    C         1             20%  (1/5)       1.0  (80% to 100%)
     private double[] letterWeights;
 
-    /**
-     * Loads the word list from a file, and calculates letter weights from file
-     */
+    /// <summary>
+    /// Loads the word list from a file, and calculates letter weights from file
+    /// </summary>
     public WordUtility()
     {
         // Load the wordlist, 
@@ -109,31 +112,31 @@ public class WordUtility
         
     }
 
-    /**
-     * Checks if a word exists in the word list
-     * @param word the word to check
-     * @return true if the word exists, false otherwise
-     */
+    /// <summary>
+    /// Checks if a word exists in the word list
+    /// </summary>
+    /// <param name="word"> word the word to check </param>
+    /// <returns> true if the word exists, false otherwise </returns>
     public bool exists(string word)
     {
         return Array.BinarySearch(wordList, word, new CaseInsensitiveComparer()) >= 0;
     }
 
-    /**
-     * Calculates the score to give a given word
-     * @param word the word to calcualte the score from
-     * @return the calculated score
-     */
+    /// <summary>
+    /// Calculates the score to give a given word
+    /// </summary>
+    /// <param name="word"> the word to calcualte the score from </param>
+    /// <returns> the calculated score </returns>
     public int calculateScore(string word)
     {
         // Score equals the square of the word length to reward the player for longer words
         return word.Length * word.Length;
     }
 
-    /**
-     * Generates a random character using the letter weights
-     * @return the random character
-     */
+    /// <summary>
+    /// Generates a random character using the letter weights
+    /// </summary>
+    /// <returns> the random character </returns>
     public char generateRandomChar()
     {
         double random = UnityEngine.Random.value;

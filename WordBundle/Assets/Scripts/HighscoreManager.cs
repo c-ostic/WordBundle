@@ -1,10 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// Manages the top ten high scores and the associated file
+/// </summary>
 public class HighscoreManager
 {
     private string scores_file = Application.persistentDataPath + "\\scoresFile";
@@ -12,10 +14,10 @@ public class HighscoreManager
     private const int NUM_SCORES = 10;
     private int[] scores;
 
-    /**
-     * Creates the high score manager, and loads the top ten scores from file
-     * If no file exists, the scores will be filled with zeros
-     */
+    /// <summary>
+    /// Creates the high score manager, and loads the top ten scores from file.
+    /// If no file exists, the scores will be filled with zeros
+    /// </summary>
     public HighscoreManager()
     {
         // load the scores from file
@@ -31,10 +33,10 @@ public class HighscoreManager
         SortScores();
     }
 
-    /**
-     * Accessor for scores
-     * @return a clone of the scores array (to prevent changes of the scores outside this class)
-     */
+    /// <summary>
+    /// Accessor for scores
+    /// </summary>
+    /// <returns> a clone of the scores array (to prevent changes of the scores outside this class) </returns>
     public IEnumerable<int> GetScores()
     {
         // return a version that doesn't allow for changing the array
@@ -42,12 +44,12 @@ public class HighscoreManager
         return (int[]) scores.Clone();
     }
 
-    /**
-     * Attempts to add a score to the list of high scores
-     * Only adds the score if it is greater than the lowest score in the top ten
-     * @param newScore the score to add
-     * @return true if the score was added, false if it wasn't
-     */
+    /// <summary>
+    /// Attempts to add a score to the list of high scores.
+    /// Only adds the score if it is greater than the lowest score in the top ten
+    /// </summary>
+    /// <param name="newScore"> the score to add </param>
+    /// <returns> true if the score was added, false if it wasn't </returns>
     public bool AddScore(int newScore)
     {
         // at this point, the scores should be sorted,
@@ -67,10 +69,10 @@ public class HighscoreManager
         }
     }
 
-    /**
-     * Saves the scores to the scores file
-     * @return true if the save succeeded, false if it failed
-     */
+    /// <summary>
+    /// Saves the scores to the scores file
+    /// </summary>
+    /// <returns> true if the save succeeded, false if it failed </returns>
     private bool SaveScores()
     {
         // clear previous scores to save any new scores
@@ -104,10 +106,10 @@ public class HighscoreManager
         }
     }
 
-    /**
-     * Clears the scores file
-     * @return true if the clear succeeded, false if it failed
-     */
+    /// <summary>
+    /// Clears the scores file
+    /// </summary>
+    /// <returns> true if the clear succeeded, false if it failed </returns>
     private bool ClearScores()
     {
         if (File.Exists(scores_file))
@@ -123,10 +125,10 @@ public class HighscoreManager
         }
     }
 
-    /**
-     * Loads scores from the file
-     * @return true if it succeeded, false if it failed
-     */
+    /// <summary>
+    /// Loads scores from file
+    /// </summary>
+    /// <returns> true if the load succeeded, false otherwise </returns>
     private bool LoadScores()
     {
         try
@@ -153,9 +155,9 @@ public class HighscoreManager
         }
     }
 
-    /**
-     * Sorts the scores in descending order
-     */
+    /// <summary>
+    /// Sorts the scores in descending order
+    /// </summary>
     private void SortScores()
     {
         Array.Sort(scores, (i, j) => j.CompareTo(i));

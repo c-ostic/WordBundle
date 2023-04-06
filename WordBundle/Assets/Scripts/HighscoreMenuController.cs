@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using TMPro;
-using System;
 
+/// <summary>
+/// Controller for the Highscore scene UI
+/// </summary>
 public class HighscoreMenuController : MonoBehaviour
 {
     private HighscoreManager highscoreManager;
@@ -13,9 +13,9 @@ public class HighscoreMenuController : MonoBehaviour
     [SerializeField]
     List<TextMeshProUGUI> scoreFields;
 
-    /**
-     * Start is called before the first frame update
-     */
+    /// <summary>
+    /// Called before the first frame update
+    /// </summary>
     private void Awake()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
@@ -31,6 +31,9 @@ public class HighscoreMenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the user to the main menu
+    /// </summary>
     public void ReturnToMain()
     {
         sceneLoader.BacktrackToScene(SceneConstants.MAIN_MENU_INDEX);

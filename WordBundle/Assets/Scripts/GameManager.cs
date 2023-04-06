@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// The object in the scene that manages the game and connects the UI to the Game State
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     private const string LOG_TAG = nameof(GameManager);
@@ -33,9 +35,9 @@ public class GameManager : MonoBehaviour
 
     private SceneLoader sceneLoader;
 
-    /**
-     * Called at the beginning of the scene starting up
-     */
+    /// <summary>
+    /// Called at the start of the scene, before Start() and the first frame update
+    /// </summary>
     private void Awake()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
@@ -47,9 +49,9 @@ public class GameManager : MonoBehaviour
         current_timer_value = 0;
     }
 
-    /**
-     * Called at the beginning of the scene starting up, but after Awake()
-     */
+    /// <summary>
+    /// Called before the first frame update
+    /// </summary>
     private void Start()
     {
         // Add a listener to each of the buttons 
@@ -66,9 +68,9 @@ public class GameManager : MonoBehaviour
         RefreshLetterButtons();
     }
 
-    /**
-     * Called every frame
-     */
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     private void Update()
     {
         // Update the timer
@@ -88,17 +90,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /**
-     * Called when this object is destroyed
-     */
+    /// <summary>
+    /// Called when this object is destroyed (such as when the scene changes)
+    /// </summary>
     private void OnDestroy()
     {
         gameState.SaveGame();
     }
 
-    /**
-     * Tells the game state to add a new letter
-     */
+    /// <summary>
+    /// Tells the game state to add a new letter
+    /// </summary>
     private void AddLetter()
     {
         int letterAffected = gameState.AddNewLetter();
@@ -112,10 +114,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /**
-     * Updates each letter button to sync them with the current gameState
-     * Also clears the current word since all buttons are set to a false state
-     */
+    /// <summary>
+    /// Updates each letter button to sync them with the current gameState.
+    /// Also clears the current word since all buttons are set to a false state.
+    /// </summary>
     private void RefreshLetterButtons()
     {
         for (int i = 0;i < letterButtons.Count;i++)
@@ -141,9 +143,9 @@ public class GameManager : MonoBehaviour
         wordEntryText.text = "";
     }
 
-    /**
-     * Loads the Game Over Screen
-     */
+    /// <summary>
+    /// Loads the Game Over Screen (a special version of the pause menu)
+    /// </summary>
     private void GameOver()
     {
         sceneLoader.AddArgument(SceneConstants.REQUEST_INFO, SceneConstants.GAME_OVER_REQUEST);
@@ -151,11 +153,11 @@ public class GameManager : MonoBehaviour
         sceneLoader.LoadNewScene(SceneConstants.PAUSE_MENU_INDEX);
     }
 
-    /**
-     * OnCheckedChanged function linked to each of the buttons to affect the game state correctly
-     * @param isChecked whether the toggle on the button was checked or unchecked
-     * @param index the index of the button for gameState context
-     */
+    /// <summary>
+    /// Linked to each of the buttons to affect the game state correctly
+    /// </summary>
+    /// <param name="toggled"> whether the toggle on the button was checked or unchecked </param>
+    /// <param name="index"> the index of the button for gameState context </param>
     private void PressLetterButton(bool toggled, int index)
     {
         if (toggled)
@@ -168,11 +170,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /**
-     * Submits the current word to the gameState
-     * If it was successful, update the score and display the word
-     * Otherwise, display the error message returned from the gameState
-     */
+    /// <summary>
+    /// Submits the current word to the gameState.
+    /// If it was successful, update the score and display the word.
+    /// Otherwise, display the error message returned from the gameState.
+    /// </summary>
     public void SubmitWord()
     {
         string currentWord = wordEntryText.text;
@@ -207,18 +209,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /**
-     * Tells the game state to shuffle the letters, then updates accordingly
-     */
+    /// <summary>
+    /// Tells the game state to shuffle the letters, then updates accordingly
+    /// </summary>
     public void ShuffleLetters()
     {
         gameState.ShuffleLetters();
         RefreshLetterButtons();
     }
 
-    /**
-     * Tells the game state to remove the last letter
-     */
+    /// <summary>
+    /// Tells the game state to remove the last letter
+    /// </summary>
     public void Backspace()
     {
         int removedLetter = gameState.Backspace();
@@ -232,18 +234,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /**
-     * Tells the game state to clear the current word
-     */
+    /// <summary>
+    /// Tells the game state to clear the current word
+    /// </summary>
     public void ClearWord()
     {
         gameState.ClearWord();
         RefreshLetterButtons();
     }
 
-    /**
-     * Loads the Pause Screen
-     */
+    /// <summary>
+    /// Loads the Pause Menu
+    /// </summary>
     public void PauseGame()
     {
         sceneLoader.AddArgument(SceneConstants.REQUEST_INFO, SceneConstants.PAUSE_REQUEST);

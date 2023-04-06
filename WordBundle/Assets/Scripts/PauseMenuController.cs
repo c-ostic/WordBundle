@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Controller for the Pause Menu UI
+/// </summary>
 public class PauseMenuController : MonoBehaviour
 {
     private const string PAUSE_TEXT = "Paused";
@@ -20,6 +21,9 @@ public class PauseMenuController : MonoBehaviour
 
     private SceneLoader sceneLoader;
 
+    /// <summary>
+    /// Called at the start of the scene, before Start() and the first frame update
+    /// </summary>
     private void Awake()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
@@ -58,11 +62,17 @@ public class PauseMenuController : MonoBehaviour
         sceneLoader.AddArgument(SceneConstants.NEW_GAME_INFO, SceneConstants.RESUME_GAME_REQUEST);
     }
 
+    /// <summary>
+    /// Returns the user to the game that was paused
+    /// </summary>
     public void ResumeGame()
     {
         sceneLoader.BacktrackToScene(SceneConstants.GAME_SCREEN_INDEX);
     }
 
+    /// <summary>
+    /// Returns the user to the main menu
+    /// </summary>
     public void ReturnToMain()
     {
         sceneLoader.BacktrackToScene(SceneConstants.MAIN_MENU_INDEX);

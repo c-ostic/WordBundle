@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Contains useful constants for loading scenes and passing information between them
+/// </summary>
 public static class SceneConstants
 {
     // Build indexes of the scenes

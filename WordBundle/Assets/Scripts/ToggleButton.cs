@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a toggleable button
+/// </summary>
 public class ToggleButton : MonoBehaviour
 {
     [SerializeField]
@@ -17,9 +18,9 @@ public class ToggleButton : MonoBehaviour
     public delegate void ToggleDelegate(bool toggled);
     public event ToggleDelegate Toggled;
 
-    /**
-     * Called at the beginning of the scene starting up
-     */
+    /// <summary>
+    /// Called at the start of the scene, before Start() and the first frame update
+    /// </summary>
     private void Awake()
     {
         toggled = false;
@@ -36,10 +37,10 @@ public class ToggleButton : MonoBehaviour
         }
     }
 
-    /**
-     * The listener for button clicks to toggle the button
-     * Invokes the Toggled event with the current toggle state
-     */
+    /// <summary>
+    /// The listener for button clicks to toggle the button.
+    /// Invokes the Toggled event with the current toggle state.
+    /// </summary>
     private void Toggle()
     {
         toggled = !toggled;
@@ -56,10 +57,11 @@ public class ToggleButton : MonoBehaviour
         Toggled?.Invoke(toggled);
     }
 
-    /**
-     * Set the toggle state directly
-     * Does not invoke the Toggled event
-     */
+    /// <summary>
+    /// Set the toggle state directly.
+    /// Does not invoke the Toggled event.
+    /// </summary>
+    /// <param name="newState"> the state to toggle to </param>
     public void SetToggleState(bool newState)
     {
         toggled = newState;
@@ -74,9 +76,10 @@ public class ToggleButton : MonoBehaviour
         }
     }
 
-    /**
-     * Returns the state of the button
-     */
+    /// <summary>
+    /// Returns the state of the button
+    /// </summary>
+    /// <returns> the state of the button </returns>
     public bool IsToggled()
     {
         return toggled;

@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Detects screen shakes on mobile to shuffle letters
+/// </summary>
 public class ScreenShakeDetector : MonoBehaviour
 {
     [SerializeField]
@@ -13,18 +14,18 @@ public class ScreenShakeDetector : MonoBehaviour
     private GameManager gameManager;
     private float currTime;
 
-    /**
-     * Called at the beginning of the scene starting up
-     */
+    /// <summary>
+    /// Called before the first frame update
+    /// </summary>
     private void Start()
     {
         currTime = 0;
         gameManager = FindObjectOfType<GameManager>();
     }
 
-    /** 
-     * Update is called once per frame
-     */
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     private void Update()
     {
         if (currTime > 0)
