@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Loads the wordlist and letter weights.
@@ -38,7 +39,8 @@ public class WordUtility
         if (wordListFile != null)
         {
             // If its not null, split it, and save it to the array
-            wordList = wordListFile.text.Split('\n');
+            Regex regex = new Regex(@"\s+");
+            wordList = regex.Split(wordListFile.text);
             Debug.Log(LOG_TAG + ": Successfully loaded word list");
         }
         else
