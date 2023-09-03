@@ -252,4 +252,13 @@ public class GameManager : MonoBehaviour
         sceneLoader.AddArgument(SceneConstants.SCORE_INFO, gameState.GetScore());
         sceneLoader.LoadNewScene(SceneConstants.PAUSE_MENU_INDEX);
     }
+
+    /// <summary>
+    /// Links Add button to the AddLetter method, while also resetting the timer
+    /// </summary>
+    public void AddLetterManual()
+    {
+        AddLetter();
+        current_timer_value = 0;
+    }
 }
