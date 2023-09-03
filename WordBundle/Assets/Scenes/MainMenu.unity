@@ -1650,6 +1650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resumeButton: {fileID: 1458725725}
+  quitButton: {fileID: 585604135}
 --- !u!1 &1770180654
 GameObject:
   m_ObjectHideFlags: 0

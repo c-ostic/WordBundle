@@ -10,6 +10,8 @@ public class MainMenuController : MonoBehaviour
 
     [SerializeField]
     private Button resumeButton;
+    [SerializeField]
+    private Button quitButton;
 
     private SceneLoader sceneLoader;
 
@@ -28,6 +30,10 @@ public class MainMenuController : MonoBehaviour
         {
             resumeButton.interactable = false;
         }
+
+#if UNITY_WEBGL
+        quitButton.gameObject.SetActive(false);
+# endif
     }
 
     /// <summary>
